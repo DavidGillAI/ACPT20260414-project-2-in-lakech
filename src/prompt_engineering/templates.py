@@ -111,7 +111,7 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Use the CTA only if it supports the post naturally.",
             ),
         ),
-        system_prompt="You are preparing Instagram post copy for the In Lak'ech brand.",
+        system_prompt="You are preparing brand-aligned Instagram post copy using the provided brand knowledge base.",
         user_prompt_prefix="Create an Instagram post using the following brief.",
         output_requirements=(
             "Lead with a strong opening line.",
@@ -131,7 +131,7 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Keep the structure easy to adapt into final marketing copy.",
             ),
         ),
-        system_prompt="You are preparing launch copy for the In Lak'ech brand.",
+        system_prompt="You are preparing brand-aligned launch copy using the provided brand knowledge base.",
         user_prompt_prefix="Create launch copy using the following brief.",
         output_requirements=(
             "Make the launch objective easy to understand.",
@@ -151,7 +151,7 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Keep the copy easy to scan.",
             ),
         ),
-        system_prompt="You are preparing product description copy for the In Lak'ech brand.",
+        system_prompt="You are preparing brand-aligned product description copy using the provided brand knowledge base.",
         user_prompt_prefix="Create a product description using the following brief.",
         output_requirements=(
             "Describe the product in a specific and useful way.",
@@ -171,7 +171,7 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Keep recommendations practical enough to brief a designer.",
             ),
         ),
-        system_prompt="You are preparing creative and design ideas for the In Lak'ech brand.",
+        system_prompt="You are preparing brand-aligned creative and design ideas using the provided brand knowledge base.",
         user_prompt_prefix="Create creative and design ideas using the following brief.",
         output_requirements=(
             "Stay close to the brand identity and context.",
