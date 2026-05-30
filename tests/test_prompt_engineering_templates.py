@@ -45,6 +45,8 @@ class PromptEngineeringTemplatesTests(unittest.TestCase):
             self.assertIn("We create with purpose.", assembly.prompt_text)
             self.assertIn("Cultural moments matter.", assembly.prompt_text)
             self.assertIn("Tone: warm and confident", assembly.prompt_text)
+            self.assertIn("Return only the requested content itself.", assembly.prompt_text)
+            self.assertIn("Do not add conversational follow-ups", assembly.prompt_text)
             self.assertEqual(assembly.template.spec.output_type, "instagram_posts")
 
     def test_assemble_prompt_handles_empty_user_inputs(self) -> None:

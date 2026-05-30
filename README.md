@@ -51,6 +51,20 @@ The repository is organized as a linear set of reusable subsystems:
 
 The overall design is intentionally modular but not over-abstracted.
 
+## Lightweight Streamlit UI
+
+The repository includes a small Streamlit interface for demo and review purposes. It is a working product surface, but still a lightweight MVP UI rather than a full SaaS front end.
+
+The UI supports:
+
+- uploading Markdown documents into the `knowledge_base/primary` or `knowledge_base/secondary` folders
+- pasting Markdown manually
+- selecting an output type
+- using guided generation inputs with preset and custom options
+- generating content through the existing backend workflows
+- displaying review status and generated output
+- downloading the generated output as a `.txt` file
+
 ## Subsystem Overview
 
 ### Markdown Ingestion
@@ -73,7 +87,7 @@ Implemented in:
 
 The prompt subsystem defines template metadata for the supported MVP output types:
 
-- Instagram posts
+- Social Media Captions
 - launch copy
 - product descriptions
 - creative/design ideas
@@ -128,7 +142,7 @@ Implemented in:
 
 The current codebase supports the following content-type workflows:
 
-- Instagram content
+- Social Media Content
 - Product descriptions
 - Launch copy
 - Creative/design ideas
@@ -167,7 +181,13 @@ knowledge_base/
 
 Markdown documents placed in those folders will be loaded by the ingestion subsystem.
 
-## Environment Variables
+## 4. Run the Streamlit UI
+
+```powershell
+streamlit run app.py
+```
+
+## 5.Environment Variables
 
 The LLM integration reads environment variables from the local environment and, if available, from `.env`.
 
@@ -208,7 +228,6 @@ Current constraints include:
 - no vector database
 - no RAG
 - no automatic publishing
-- no frontend UI
 - no autonomous revision loops
 - no automated evaluation scoring
 
@@ -233,10 +252,11 @@ Current behavior:
 - outputs are returned in structured form
 - human review is required after generation
 - comparison testing is available for brand-aligned versus generic output
+- lightweight Streamlit UI is available for guided demo usage
+- generated output can be downloaded as a `.txt` file
 
 Not yet implemented:
 
-- frontend UI
 - publishing
 - scheduling
 - automated revision loops
@@ -265,11 +285,10 @@ For uniqueness testing, the system can also:
 
 The following items are natural next steps, but they are not implemented yet:
 
-- a lightweight reviewer interface
-- persistence for review decisions
-- richer metadata for comparison runs
+- persistent review history
+- optional brand profile switching
+- additional document parsers
 - additional content-type workflows if approved by scope
 - better developer documentation examples
-- packaging or CLI entry points for running workflows interactively
 
 Any future change should continue to follow the scope rules in `PROJECT_REQUIREMENTS.md`.

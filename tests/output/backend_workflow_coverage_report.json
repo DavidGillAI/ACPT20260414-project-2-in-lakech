@@ -1,0 +1,11 @@
+{
+  "total_runs": 100,
+  "passed": 100,
+  "failed": 0,
+  "output_type_counts": {
+    "instagram_posts": 23,
+    "launch_copy": 26,
+    "product_descriptions": 18,
+    "creative_design_ideas": 33
+  }
+}

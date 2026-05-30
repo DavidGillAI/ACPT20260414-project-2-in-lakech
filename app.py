@@ -22,10 +22,42 @@ KB_ROOT = Path("knowledge_base")
 LOGO_PATH = Path("InLakech_logo_cropped.png")
 
 WORKFLOW_OPTIONS = {
-    "Instagram caption text": InstagramContentWorkflow,
+    "Social media caption": InstagramContentWorkflow,
     "Launch copy": LaunchCopyWorkflow,
     "Product description": ProductDescriptionsWorkflow,
     "Creative/design ideas": CreativeDesignIdeasWorkflow,
+}
+
+GUIDED_INPUT_OPTIONS = {
+    "tone": ["Reflective", "Cinematic", "Editorial", "Conversational", "Minimal", "Warm", "Bold", "Professional"],
+    "platform": ["Instagram", "Personal Blog", "LinkedIn", "Email Newsletter", "Product Page", "YouTube Description"],
+    "cta": [
+        "Ask a reflective question",
+        "Invite comments",
+        "Encourage sharing",
+        "Direct users to a website",
+        "Invite sign-ups",
+        "No CTA",
+    ],
+    "campaign_objective": [
+        "Build awareness",
+        "Launch a product",
+        "Explain a concept",
+        "Drive engagement",
+        "Build community",
+        "Tell a founder story",
+        "Generate design ideas",
+    ],
+    "target_audience": [
+        "Independent creatives",
+        "ADHD creatives",
+        "Filmmakers",
+        "Writers",
+        "Ethical brands",
+        "Small business owners",
+        "Existing followers",
+    ],
+    "word_count": ["50", "100", "150", "250", "500"],
 }
 
 
@@ -212,7 +244,8 @@ def _inject_styles() -> None:
             color: rgba(239, 231, 220, 0.42) !important;
         }
 
-        .stButton > button {
+        .stButton > button,
+        .stDownloadButton > button {
             background: linear-gradient(135deg, rgba(215, 177, 93, 0.95), rgba(175, 137, 42, 0.92)) !important;
             color: #1a102e !important;
             border: 0 !important;
@@ -224,12 +257,14 @@ def _inject_styles() -> None:
             box-shadow: 0 14px 28px rgba(0, 0, 0, 0.24);
         }
 
-        .stButton > button:hover {
+        .stButton > button:hover,
+        .stDownloadButton > button:hover {
             filter: brightness(1.03);
             transform: translateY(-1px);
         }
 
-        .stButton > button span, .stButton > button p {
+        .stButton > button span, .stButton > button p,
+        .stDownloadButton > button span, .stDownloadButton > button p {
             color: #1a102e !important;
         }
 
@@ -365,6 +400,29 @@ def _build_prompt_inputs() -> PromptInputBundle:
     )
 
 
+def _render_guided_input(field_label: str, state_key: str) -> None:
+    options = GUIDED_INPUT_OPTIONS[state_key]
+    choice_key = f"{state_key}_choice"
+    custom_key = f"{state_key}_custom"
+    current_value = st.session_state.get(state_key) or ""
+
+    if choice_key not in st.session_state:
+        st.session_state[choice_key] = current_value if current_value in options else ("Custom..." if current_value else options[0])
+    if st.session_state[choice_key] == "Custom..." and custom_key not in st.session_state and current_value and current_value not in options:
+        st.session_state[custom_key] = current_value
+
+    choice = st.selectbox(field_label, options + ["Custom..."], key=choice_key)
+    if choice == "Custom...":
+        custom_value = st.text_input(
+            f"Custom {field_label}",
+            key=custom_key,
+            placeholder=f"Enter custom {field_label.lower()}...",
+        )
+        st.session_state[state_key] = custom_value.strip()
+    else:
+        st.session_state[state_key] = choice
+
+
 def main() -> None:
     st.set_page_config(page_title=APP_TITLE, layout="wide")
     _inject_styles()
@@ -383,7 +441,7 @@ def main() -> None:
 
     ensure_knowledge_base_structure(KB_ROOT)
 
-    left, center, right = st.columns([1.05, 1.9, 1.2])
+    left, center, right = st.columns([0.9, 1.3, 2.2])
 
     with left:
         with st.container(border=True):
@@ -427,12 +485,12 @@ def main() -> None:
             st.subheader("Generation Inputs")
             output_type = st.selectbox("Output type", list(WORKFLOW_OPTIONS.keys()))
 
-            st.text_input("Tone", key="tone")
-            st.text_input("Platform", key="platform")
-            st.text_input("CTA", key="cta")
-            st.text_input("Campaign objective", key="campaign_objective")
-            st.text_input("Target audience", key="target_audience")
-            st.text_input("Word count", key="word_count")
+            _render_guided_input("Tone", "tone")
+            _render_guided_input("Platform", "platform")
+            _render_guided_input("CTA", "cta")
+            _render_guided_input("Campaign objective", "campaign_objective")
+            _render_guided_input("Target audience", "target_audience")
+            _render_guided_input("Word count", "word_count")
             st.text_area("Example content", key="example_content", height=120)
             st.text_area("Detailed instructions", key="detailed_instructions", height=120)
 
@@ -473,10 +531,12 @@ def main() -> None:
                     """,
                     unsafe_allow_html=True,
                 )
-
-    st.divider()
-    st.caption("Uploaded Markdown is stored in the existing knowledge_base/primary and knowledge_base/secondary folders.")
-
+                st.download_button(
+                    "Download output as .txt",
+                    data=latest_result.generation_result.generation.text,
+                    file_name="generated_output.txt",
+                    mime="text/plain",
+                )
 
 if __name__ == "__main__":
     main()

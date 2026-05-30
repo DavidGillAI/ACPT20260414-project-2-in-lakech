@@ -14,6 +14,12 @@ PromptOutputType = Literal[
 ]
 
 
+NO_CONVERSATIONAL_FOLLOWUP_INSTRUCTION = (
+    "Return only the requested content itself.",
+    "Do not add conversational follow-ups, offers of further help, questions, or closing remarks.",
+)
+
+
 @dataclass(frozen=True)
 class PromptInputBundle:
     """Structured user inputs that shape prompt assembly."""
@@ -109,9 +115,10 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Write for Instagram-native attention patterns.",
                 "Keep the tone consistent with the brand knowledge base.",
                 "Use the CTA only if it supports the post naturally.",
+                *NO_CONVERSATIONAL_FOLLOWUP_INSTRUCTION,
             ),
         ),
-        system_prompt="You are preparing brand-aligned Instagram post copy using the provided brand knowledge base.",
+        system_prompt="You are preparing brand-aligned Instagram post copy using the provided brand knowledge base. Return only the requested content itself.",
         user_prompt_prefix="Create an Instagram post using the following brief.",
         output_requirements=(
             "Lead with a strong opening line.",
@@ -129,9 +136,10 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Highlight the launch objective clearly.",
                 "Balance excitement with brand credibility.",
                 "Keep the structure easy to adapt into final marketing copy.",
+                *NO_CONVERSATIONAL_FOLLOWUP_INSTRUCTION,
             ),
         ),
-        system_prompt="You are preparing brand-aligned launch copy using the provided brand knowledge base.",
+        system_prompt="You are preparing brand-aligned launch copy using the provided brand knowledge base. Return only the requested content itself.",
         user_prompt_prefix="Create launch copy using the following brief.",
         output_requirements=(
             "Make the launch objective easy to understand.",
@@ -149,9 +157,10 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Focus on benefits, features, and brand-aligned framing.",
                 "Avoid generic e-commerce phrasing where possible.",
                 "Keep the copy easy to scan.",
+                *NO_CONVERSATIONAL_FOLLOWUP_INSTRUCTION,
             ),
         ),
-        system_prompt="You are preparing brand-aligned product description copy using the provided brand knowledge base.",
+        system_prompt="You are preparing brand-aligned product description copy using the provided brand knowledge base. Return only the requested content itself.",
         user_prompt_prefix="Create a product description using the following brief.",
         output_requirements=(
             "Describe the product in a specific and useful way.",
@@ -169,9 +178,10 @@ PROMPT_TEMPLATES: dict[PromptOutputType, PromptTemplate] = {
                 "Focus on ideas rather than finished artwork.",
                 "Use the brand knowledge base to anchor symbolism and tone.",
                 "Keep recommendations practical enough to brief a designer.",
+                *NO_CONVERSATIONAL_FOLLOWUP_INSTRUCTION,
             ),
         ),
-        system_prompt="You are preparing brand-aligned creative and design ideas using the provided brand knowledge base.",
+        system_prompt="You are preparing brand-aligned creative and design ideas using the provided brand knowledge base. Return only the requested content itself.",
         user_prompt_prefix="Create creative and design ideas using the following brief.",
         output_requirements=(
             "Stay close to the brand identity and context.",
