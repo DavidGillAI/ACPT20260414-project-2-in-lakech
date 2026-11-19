@@ -1,6 +1,34 @@
-# In Lak'ech MVP
+# In Lak'ech: AI Brand Content Assistant
 
 In Lak'ech is a human-guided AI brand storytelling and content generation MVP. The codebase is focused on a small, modular pipeline that ingests brand Markdown, structures that knowledge, assembles prompts, sends them to an LLM, and returns generated content for human review.
+
+## Project at a glance
+
+| Question | Answer |
+| --- | --- |
+| Problem | Generic AI copy can lose a brand's voice, values and identity. |
+| Solution | Supply structured brand knowledge and guided inputs before generation, then return the result for human review. |
+| Users | Brand owners and content creators preparing captions, launch copy and product descriptions. |
+| Tools | Python, Streamlit, the OpenAI API and Markdown source documents. |
+| Evidence | Offline workflow tests, recorded live smoke tests and side-by-side output comparisons. |
+| Current limit | A local MVP with no saved review history or publishing integration; comparisons do not establish general output quality. |
+
+![In Lak'ech Streamlit interface with generated content and a download control](Screenshots_and_Recordings/Evolution_of_UI/InLakech_Working_UI_test5_with_download_button.png)
+
+*Existing development screenshot. See the [recorded live checks](docs/live_smoke_test_results.md) and [brand-context comparison](docs/live_uniqueness_comparison_results.md) for the test conditions and findings.*
+
+## My contribution and use of AI
+
+I developed this MVP using AI-assisted coding, with an emphasis on defining requirements, maintaining scope and keeping human review in the content workflow. The [project requirements](PROJECT_REQUIREMENTS.md) and [prompt tracking log](docs/prompt_tracking_log.md) document the intended behaviour and development decisions.
+
+I used offline tests with fake generators to check workflow behaviour, and separate live checks to examine API integration and generated output. These provide different kinds of evidence: passing an offline test does not establish that real AI copy is accurate, distinctive or suitable for publication.
+
+### Explore the project
+
+- [Presentation](in-lakech-mvp_presentation.pdf)
+- [Live smoke-test record](docs/live_smoke_test_results.md)
+- [Brand-aligned versus generic output findings](docs/live_uniqueness_comparison_results.md)
+- [Offline tests](tests/)
 
 ## Project Overview
 
